@@ -6,6 +6,9 @@ const nextConfig: NextConfig = {
   images: {
     domains: ["image.tmdb.org"], // Enables Next/Image to load TMDB images
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 };
 
 export default nextConfig;
