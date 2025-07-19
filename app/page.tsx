@@ -1,95 +1,63 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
 
-export default function Home() {
+import { useSession, signIn } from "next-auth/react";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+
+export default function Component() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.push("/movies");
+    }
+  }, [status, router]);
+
+  if (status === "loading") {
+    return (
+      <div className="flex items-center justify-center h-screen bg-black text-white text-xl">
+        Loading CineNova...
+      </div>
+    );
+  }
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <div
+      className="relative h-screen w-full bg-cover bg-center"
+      style={{ backgroundImage: "url('/images/movies-bg.jpg')" }}
+    >
+      {/* Black overlay with gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-black/60 to-zinc-900/70"></div>
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+      {/* Main content */}
+      <div className="relative z-10 flex flex-col items-center justify-center h-full text-white px-4">
+        {/* Logo */}
+        <h1 className="text-5xl sm:text-6xl font-bold mb-12 tracking-tight text-indigo-400 drop-shadow-md">
+          CINE<span className="text-white">NOVA</span>
+        </h1>
+
+        {/* Glass card */}
+        <div className="bg-white/10 border border-white/20 backdrop-blur-2xl rounded-2xl shadow-2xl p-10 w-full max-w-md text-center space-y-6 transition hover:scale-[1.01] hover:shadow-indigo-500/20 duration-300">
+          <p className="text-xl font-semibold tracking-wide text-white drop-shadow-sm">
+            Welcome to CineNova
+          </p>
+          <button
+            onClick={() => signIn("github")}
+            className="w-full px-6 py-3 bg-indigo-600 hover:bg-indigo-700 transition rounded-full font-semibold text-white shadow-lg shadow-indigo-500/20 cursor-pointer"
           >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
+            Sign in with GitHub
+          </button>
+          <p className="text-sm text-zinc-300 font-light">
+            Your gateway to cinematic discovery.
+          </p>
         </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+        {/* Footer */}
+        <p className="text-xs text-white/50 text-center mt-10">
+          © {new Date().getFullYear()} Aniket More. All rights reserved.
+        </p>
+      </div>
     </div>
   );
 }
