@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 
-export const dynamic = "force-dynamic";
+export const dynamic = "force-dynamic"; // Force dynamic rendering
 
 const API_KEY = process.env.TMDB_API_KEY!;
 
@@ -20,7 +20,7 @@ async function getMovie(id: string): Promise<MovieDetail | null> {
     const res = await fetch(
       `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`,
       {
-        next: { revalidate: 60 },
+        next: { revalidate: 60 }, // ISR
       }
     );
     if (!res.ok) return null;
