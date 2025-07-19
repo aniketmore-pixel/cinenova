@@ -1,6 +1,4 @@
 import { notFound } from "next/navigation";
-import dynamic from "next/dynamic";
-
 
 interface MovieDetail {
   id: number;
@@ -27,11 +25,13 @@ async function getMovie(id: string): Promise<MovieDetail | null> {
   }
 }
 
-export default async function MovieDetailPage({
-  params,
-}: {
-  params: { id: string };
-}) {
+type PageProps = {
+  params: {
+    id: string;
+  };
+};
+
+export default async function MovieDetailPage({ params }: PageProps) {
   const movie = await getMovie(params.id);
 
   if (!movie) return notFound();
@@ -45,7 +45,9 @@ export default async function MovieDetailPage({
           className="rounded-2xl w-full md:w-1/3 shadow-md"
         />
         <div className="text-white">
-          <h1 className="text-4xl font-extrabold mb-3 text-blue-200">{movie.title}</h1>
+          <h1 className="text-4xl font-extrabold mb-3 text-blue-200">
+            {movie.title}
+          </h1>
           <p className="text-sm text-blue-300 mb-2">
             🎬 Released: <span className="text-blue-100">{movie.release_date}</span>
           </p>
