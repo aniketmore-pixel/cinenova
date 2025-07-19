@@ -1,20 +1,11 @@
-import { notFound } from "next/navigation";
-import Head from "next/head"; // ✅ Add this import
+// app/movie/[id]/page.tsx
 
-interface MovieDetail {
-  id: number;
-  title: string;
-  overview: string;
-  release_date: string;
-  vote_average: number;
-  poster_path: string;
-  backdrop_path: string;
-  genres: { id: number; name: string }[];
-}
+import Head from "next/head";
+import { notFound } from "next/navigation";
 
 const API_KEY = process.env.TMDB_API_KEY!;
 
-async function getMovie(id: string): Promise<MovieDetail | null> {
+async function getMovie(id: string) {
   try {
     const res = await fetch(
       `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`,
@@ -23,29 +14,22 @@ async function getMovie(id: string): Promise<MovieDetail | null> {
     if (!res.ok) return null;
     return res.json();
   } catch (error) {
-    console.error("Fetch error:", error);
     return null;
   }
 }
 
-export default async function MovieDetailPage({
-  params,
-}: {
-  params: { id: string };
-}) {
+export default async function MovieDetailPage({ params }: any) {
   const movie = await getMovie(params.id);
 
   if (!movie) return notFound();
 
   return (
     <>
-      {/* ✅ Dynamic Metadata */}
       <Head>
         <title>{movie.title}</title>
         <meta name="description" content={movie.overview} />
       </Head>
 
-      {/* ✅ Actual Page */}
       <div className="p-6 max-w-5xl mx-auto">
         <div className="flex flex-col md:flex-row gap-8 rounded-3xl shadow-xl border border-blue-500/30 bg-blue-500/10 backdrop-blur-xl p-6">
           <img
@@ -66,7 +50,7 @@ export default async function MovieDetailPage({
               ⭐ {movie.vote_average.toFixed(1)} / 10
             </p>
             <div className="flex flex-wrap gap-2 mt-4">
-              {movie.genres?.map((genre) => (
+              {movie.genres?.map((genre: any) => (
                 <span
                   key={genre.id}
                   className="text-xs font-medium px-3 py-1 rounded-full bg-blue-500/20 text-blue-200 border border-blue-400/30"
