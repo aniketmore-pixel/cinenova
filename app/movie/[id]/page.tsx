@@ -39,7 +39,7 @@ async function getMovie(id: string): Promise<MovieDetail | null> {
   }
 }
 
-export default async function MovieDetailPage({ params }: PageProps) {
+export default async function MovieDetailPage({ params }: Awaited<PageProps>) {
   const movie = await getMovie(params.id);
   if (!movie) return notFound();
 
