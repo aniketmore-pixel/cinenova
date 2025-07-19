@@ -34,7 +34,9 @@ type PageProps = {
   };
 };
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+// ✅ FIXED generateMetadata: await the props
+export async function generateMetadata(props: Promise<PageProps>): Promise<Metadata> {
+  const { params } = await props;
   const movie = await getMovie(params.id);
   return {
     title: movie?.title ?? "Movie Not Found",
@@ -42,14 +44,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-export default async function MovieDetailPage({ params }: PageProps) {
-  console.log("DEBUG: params received:", params);
+// ✅ FIXED MovieDetailPage: await the props
+export default async function MovieDetailPage(props: Promise<PageProps>) {
+  const { params } = await props;
 
   const movie = await getMovie(params.id);
-  console.log("DEBUG: movie fetched:", movie);
 
   if (!movie) {
-    console.warn("DEBUG: movie not found, returning 404");
     return notFound();
   }
 
