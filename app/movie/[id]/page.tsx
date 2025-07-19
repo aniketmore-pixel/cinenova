@@ -34,9 +34,8 @@ type PageProps = {
   };
 };
 
-// ✅ FIXED generateMetadata: await the props
-export async function generateMetadata(props: Promise<PageProps>): Promise<Metadata> {
-  const { params } = await props;
+// ✅ OK: Props can be a Promise here in generateMetadata
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const movie = await getMovie(params.id);
   return {
     title: movie?.title ?? "Movie Not Found",
@@ -44,10 +43,8 @@ export async function generateMetadata(props: Promise<PageProps>): Promise<Metad
   };
 }
 
-// ✅ FIXED MovieDetailPage: await the props
-export default async function MovieDetailPage(props: Promise<PageProps>) {
-  const { params } = await props;
-
+// ✅ FIXED: props is NOT a Promise in the page component
+export default async function MovieDetailPage({ params }: PageProps) {
   const movie = await getMovie(params.id);
 
   if (!movie) {
