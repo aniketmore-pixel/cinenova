@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation";
 
-export const dynamic = "force-dynamic"; // ✅ Safest fix for Vercel's dynamic routing
+export const dynamic = "force-dynamic";
+
+const API_KEY = process.env.TMDB_API_KEY!;
 
 interface MovieDetail {
   id: number;
@@ -12,14 +14,6 @@ interface MovieDetail {
   backdrop_path: string;
   genres: { id: number; name: string }[];
 }
-
-type PageProps = {
-  params: {
-    id: string;
-  };
-};
-
-const API_KEY = process.env.TMDB_API_KEY!;
 
 async function getMovie(id: string): Promise<MovieDetail | null> {
   try {
@@ -36,7 +30,11 @@ async function getMovie(id: string): Promise<MovieDetail | null> {
   }
 }
 
-export default async function MovieDetailPage({ params }: PageProps) {
+export default async function MovieDetailPage({
+  params,
+}: {
+  params: { id: string };
+}) {
   const movie = await getMovie(params.id);
   if (!movie) return notFound();
 
