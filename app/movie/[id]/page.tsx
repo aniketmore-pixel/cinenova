@@ -11,13 +11,22 @@ interface MovieDetail {
   genres: { id: number; name: string }[];
 }
 
+type PageProps = {
+  params: {
+    id: string;
+  };
+};
+
 const API_KEY = process.env.TMDB_API_KEY!;
 
 async function getMovie(id: string): Promise<MovieDetail | null> {
   try {
     const res = await fetch(
       `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`,
-      { next: { revalidate: 60 } }
+      {
+        // Revalidate every 60 seconds
+        next: { revalidate: 60 },
+      }
     );
     if (!res.ok) return null;
     return res.json();
@@ -26,12 +35,7 @@ async function getMovie(id: string): Promise<MovieDetail | null> {
   }
 }
 
-// ✅ NO EXTRA TYPES — just inline typing here
-export default async function MovieDetailPage({
-  params,
-}: {
-  params: { id: string };
-}) {
+export default async function MovieDetailPage({ params }: PageProps) {
   const movie = await getMovie(params.id);
   if (!movie) return notFound();
 
@@ -44,9 +48,12 @@ export default async function MovieDetailPage({
           className="rounded-2xl w-full md:w-1/3 shadow-md"
         />
         <div className="text-white">
-          <h1 className="text-4xl font-extrabold mb-3 text-blue-200">{movie.title}</h1>
+          <h1 className="text-4xl font-extrabold mb-3 text-blue-200">
+            {movie.title}
+          </h1>
           <p className="text-sm text-blue-300 mb-2">
-            🎬 Released: <span className="text-blue-100">{movie.release_date}</span>
+            🎬 Released:{" "}
+            <span className="text-blue-100">{movie.release_date}</span>
           </p>
           <p className="text-sm text-blue-100 mb-4">{movie.overview}</p>
           <p className="text-lg font-semibold text-yellow-400 mb-2">
