@@ -11,6 +11,9 @@ interface MovieDetail {
   genres: { id: number; name: string }[];
 }
 
+// ✅ This fixes the Vercel `params` runtime error
+export const dynamicParams = true;
+
 type PageProps = {
   params: {
     id: string;
@@ -24,7 +27,6 @@ async function getMovie(id: string): Promise<MovieDetail | null> {
     const res = await fetch(
       `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`,
       {
-        // Revalidate every 60 seconds
         next: { revalidate: 60 },
       }
     );
