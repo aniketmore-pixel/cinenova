@@ -28,15 +28,12 @@ async function getMovie(id: string): Promise<MovieDetail | null> {
   }
 }
 
-type PageProps = {
-  params: {
-    id: string;
-  };
-};
-
-// ✅ OK: Props can be a Promise here in generateMetadata
-export async function generateMetadata(props: Promise<PageProps>): Promise<Metadata> {
-  const { params } = await props;
+// ✅ THIS FIXES THE TYPE ERROR
+export async function generateMetadata({
+  params,
+}: {
+  params: { id: string };
+}): Promise<Metadata> {
   const movie = await getMovie(params.id);
   return {
     title: movie?.title ?? "Movie Not Found",
@@ -44,8 +41,12 @@ export async function generateMetadata(props: Promise<PageProps>): Promise<Metad
   };
 }
 
-// ✅ FIXED: props is NOT a Promise in the page component
-export default async function MovieDetailPage({ params }: PageProps) {
+// ✅ DO NOT use Promise<PageProps> here
+export default async function MovieDetailPage({
+  params,
+}: {
+  params: { id: string };
+}) {
   const movie = await getMovie(params.id);
 
   if (!movie) {
@@ -61,9 +62,12 @@ export default async function MovieDetailPage({ params }: PageProps) {
           className="rounded-2xl w-full md:w-1/3 shadow-md"
         />
         <div className="text-white">
-          <h1 className="text-4xl font-extrabold mb-3 text-blue-200">{movie.title}</h1>
+          <h1 className="text-4xl font-extrabold mb-3 text-blue-200">
+            {movie.title}
+          </h1>
           <p className="text-sm text-blue-300 mb-2">
-            🎬 Released: <span className="text-blue-100">{movie.release_date}</span>
+            🎬 Released:{" "}
+            <span className="text-blue-100">{movie.release_date}</span>
           </p>
           <p className="text-sm text-blue-100 mb-4">{movie.overview}</p>
           <p className="text-lg font-semibold text-yellow-400 mb-2">
