@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 
 interface MovieDetail {
   id: number;
@@ -17,24 +18,40 @@ async function getMovie(id: string): Promise<MovieDetail | null> {
   try {
     const res = await fetch(
       `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`,
-      {
-        next: { revalidate: 60 },
-      }
+      { next: { revalidate: 60 } }
     );
     if (!res.ok) return null;
     return res.json();
-  } catch {
+  } catch (error) {
+    console.error("Fetch error:", error);
     return null;
   }
 }
 
-export default async function MovieDetailPage({
-  params,
-}: {
-  params: { id: string };
-}) {
+type PageProps = {
+  params: {
+    id: string;
+  };
+};
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const movie = await getMovie(params.id);
-  if (!movie) return notFound();
+  return {
+    title: movie?.title ?? "Movie Not Found",
+    description: movie?.overview ?? "",
+  };
+}
+
+export default async function MovieDetailPage({ params }: PageProps) {
+  console.log("DEBUG: params received:", params);
+
+  const movie = await getMovie(params.id);
+  console.log("DEBUG: movie fetched:", movie);
+
+  if (!movie) {
+    console.warn("DEBUG: movie not found, returning 404");
+    return notFound();
+  }
 
   return (
     <div className="p-6 max-w-5xl mx-auto">
