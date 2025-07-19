@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 
-export const dynamic = "force-dynamic";
+export const dynamic = "force-dynamic"; // ✅ Safest fix for Vercel's dynamic routing
 
 interface MovieDetail {
   id: number;
@@ -12,9 +12,6 @@ interface MovieDetail {
   backdrop_path: string;
   genres: { id: number; name: string }[];
 }
-
-// ✅ This fixes the Vercel `params` runtime error
-export const dynamicParams = true;
 
 type PageProps = {
   params: {
@@ -39,7 +36,7 @@ async function getMovie(id: string): Promise<MovieDetail | null> {
   }
 }
 
-export default async function MovieDetailPage({ params }: Awaited<PageProps>) {
+export default async function MovieDetailPage({ params }: PageProps) {
   const movie = await getMovie(params.id);
   if (!movie) return notFound();
 
