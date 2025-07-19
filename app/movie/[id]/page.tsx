@@ -1,9 +1,5 @@
 import { notFound } from "next/navigation";
 
-export const dynamic = "force-dynamic"; // Force dynamic rendering
-
-const API_KEY = process.env.TMDB_API_KEY!;
-
 interface MovieDetail {
   id: number;
   title: string;
@@ -15,12 +11,14 @@ interface MovieDetail {
   genres: { id: number; name: string }[];
 }
 
+const API_KEY = process.env.TMDB_API_KEY!;
+
 async function getMovie(id: string): Promise<MovieDetail | null> {
   try {
     const res = await fetch(
       `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`,
       {
-        next: { revalidate: 60 }, // ISR
+        next: { revalidate: 60 },
       }
     );
     if (!res.ok) return null;
@@ -47,12 +45,9 @@ export default async function MovieDetailPage({
           className="rounded-2xl w-full md:w-1/3 shadow-md"
         />
         <div className="text-white">
-          <h1 className="text-4xl font-extrabold mb-3 text-blue-200">
-            {movie.title}
-          </h1>
+          <h1 className="text-4xl font-extrabold mb-3 text-blue-200">{movie.title}</h1>
           <p className="text-sm text-blue-300 mb-2">
-            🎬 Released:{" "}
-            <span className="text-blue-100">{movie.release_date}</span>
+            🎬 Released: <span className="text-blue-100">{movie.release_date}</span>
           </p>
           <p className="text-sm text-blue-100 mb-4">{movie.overview}</p>
           <p className="text-lg font-semibold text-yellow-400 mb-2">
