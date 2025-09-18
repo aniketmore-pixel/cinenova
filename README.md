@@ -6,7 +6,12 @@ It allows users to explore popular movies, search by title, and save their favor
 ---
 ## 📸 Screenshots
 
-> _You can add screenshots of the UI here_
+> <img width="960" height="540" alt="image" src="https://github.com/user-attachments/assets/9b8e8bc7-88d7-4701-9498-139afb62e271" />
+> <img width="960" height="540" alt="image" src="https://github.com/user-attachments/assets/3a598ffd-c4cc-49c7-a839-bc50d67bb35a" />
+> <img width="960" height="540" alt="image" src="https://github.com/user-attachments/assets/55e925cf-f6c4-45b8-a6be-40bdd2b73c32" />
+
+
+
 
 ---
 
