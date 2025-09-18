@@ -1,7 +1,6 @@
 # 🎬 Cinenova
 
-Cinenova is a modern movie discovery app built with **Next.js 15**, **React 19**, **TailwindCSS 4**, and **NextAuth**.  
-It allows users to explore popular movies, search by title, and save their favorites locally.
+Cinenova is a modern movie discovery app built with **Next.js 15**, **React 19**, **TailwindCSS 4**, and **NextAuth**. It allows users to explore popular movies, search by title, and save their favorites locally.
 
 ---
 ## 📸 Screenshots
