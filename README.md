@@ -4,6 +4,11 @@ Cinenova is a modern movie discovery app built with **Next.js 15**, **React 19**
 It allows users to explore popular movies, search by title, and save their favorites locally.
 
 ---
+## 📸 Screenshots
+
+> _You can add screenshots of the UI here_
+
+---
 
 ## 🚀 Features
 
@@ -88,15 +93,5 @@ cinenova/
 
 ---
 
-## 📸 Screenshots
 
-> _You can add screenshots of the UI here_
 
----
-
-## 📜 License
-
-This project is licensed under the MIT License.  
-Feel free to use and modify for your own projects.
-
----
