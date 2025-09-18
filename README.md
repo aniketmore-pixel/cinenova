@@ -1,36 +1,102 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎬 Cinenova
 
-## Getting Started
+Cinenova is a modern movie discovery app built with **Next.js 15**, **React 19**, **TailwindCSS 4**, and **NextAuth**.  
+It allows users to explore popular movies, search by title, and save their favorites locally.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 🚀 Features
+
+- 🔑 **Authentication** with NextAuth  
+- 🎥 **Browse Popular Movies** (via TMDB API)  
+- 🔍 **Search Movies** by title  
+- ⭐ **Save Favorites** (localStorage)  
+- 🎨 **Modern UI** with TailwindCSS & Lucide icons  
+- 📱 Responsive & smooth user experience  
+
+---
+
+## 🛠️ Tech Stack
+
+- [Next.js 15](https://nextjs.org/) (App Router, API routes)  
+- [React 19](https://react.dev/)  
+- [TailwindCSS 4](https://tailwindcss.com/)  
+- [NextAuth](https://next-auth.js.org/)  
+- [TMDB API](https://developer.themoviedb.org/docs) for movie data  
+- [Lucide React](https://lucide.dev/) for icons  
+
+---
+
+## ⚙️ Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/yourusername/cinenova.git
+   cd cinenova
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Create a `.env.local` file in the root and add:
+
+   ```env
+   TMDB_API_KEY=your_tmdb_api_key
+   NEXTAUTH_SECRET=your_secret
+   NEXTAUTH_URL=http://localhost:3000
+   ```
+
+4. Run the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+   The app will be running at [http://localhost:3000](http://localhost:3000).
+
+---
+
+## 📂 Project Structure
+
+```
+cinenova/
+├── app/
+│   ├── api/
+│   │   ├── movies/route.ts    # Popular movies endpoint
+│   │   ├── search/route.ts    # Search movies endpoint
+│   ├── favorites/             # Favorites page
+│   ├── movie/[id]/            # Movie details page
+│   └── page.tsx               # Home / Explore movies
+│
+├── components/
+│   ├── MovieCard.tsx          # Movie card UI
+│   ├── MovieGrid.tsx          # Movie grid with pagination
+│   ├── SkeletonGrid.tsx       # Loading skeletons
+│   └── BackButton.tsx         # Reusable back button
+│
+├── utils/
+│   └── favorites.ts           # Favorites utils (localStorage)
+│
+├── public/                    # Static assets
+├── styles/                    # Tailwind styles
+└── package.json
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📸 Screenshots
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+> _You can add screenshots of the UI here_
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 📜 License
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+This project is licensed under the MIT License.  
+Feel free to use and modify for your own projects.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
